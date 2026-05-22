@@ -1,0 +1,12 @@
+services:
+  external-consumer:
+    build: .
+    container_name: external-genealogy-consumer
+    environment:
+      RABBITMQ_HOST: rabbitmq  # Uses the NameProvider's RabbitMQ service
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+      QUEUE_NAME: genealogy-persons
+    network_mode: "container:genealogy-rabbitmq"  # Share RabbitMQ's network
+    restart: unless-stopped

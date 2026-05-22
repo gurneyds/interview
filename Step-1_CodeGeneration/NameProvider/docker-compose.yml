@@ -1,0 +1,35 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: genealogy-rabbitmq
+    ports:
+      - "5672:5672"    # AMQP protocol
+      - "15672:15672"  # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  name-provider:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: genealogy-name-provider
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+      QUEUE_NAME: genealogy-persons
+      MIN_QUEUE_SIZE: 10
+      BATCH_PRODUCTION_SIZE: 5
+      MONITOR_INTERVAL_SECONDS: 5
+      LOG_LEVEL: INFO
+    restart: unless-stopped

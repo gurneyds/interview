@@ -1,0 +1,5 @@
+firstName,lastName,birthYear,deathYear,birthPlace
+John,Smith,1842,1923,Boston MA
+Jane,Doe,1856,,New York NY
+Robert,Johnson,1801,1891,London England
+Mary,Williams,1700,1650,Invalid Place
