@@ -10,5 +10,7 @@ The interview has two main areas:
 ## Time boxing
 
 (10 minutes) Introductions, outline the process
+
 (25 minutes) Code generation
+
 (25 minutes) Evluating code
